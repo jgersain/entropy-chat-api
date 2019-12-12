@@ -1,0 +1,13 @@
+package main
+
+import (
+	"net/http"
+	"fmt"
+)
+
+func main() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "<h1>Hola Mundo</h1>")
+	})
+	http.ListenAndServe(":8080", nil)
+}
