@@ -1,0 +1,11 @@
+# dotenv environment variables file
+.env
+
+# IDE
+.idea/*
+*.iml
+*.sublime-*
+
+# OSX
+.DS_Store
+.vscode
