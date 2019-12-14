@@ -1,13 +1,7 @@
 package main
 
-import (
-	"net/http"
-	"fmt"
-)
+import "github.com/jgersain/entropy-chat-api/api"
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "<h1>Hola Mundo</h1>")
-	})
-	http.ListenAndServe(":8080", nil)
+	api.Run()
 }
