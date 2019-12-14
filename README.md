@@ -51,11 +51,11 @@ Accept: application/json
 
 ```
 {
-	"name":"John Connor",
-	"age":"26",
-	"email":"john@connor.com",
-	"password":"startx",
-	"profile_photo":""
+    "name":"John Connor",
+    "age":"26",
+    "email":"john@connor.com",
+    "password":"startx",
+    "profile_photo":""
 }
 ```
 
@@ -70,15 +70,14 @@ Respuesta con estatus 201
 
 ```
 {
-    "ID": 3,
-    "CreatedAt": "2019-12-13T20:24:43.2412471-06:00",
-    "UpdatedAt": "2019-12-13T20:24:43.2412471-06:00",
-    "DeletedAt": null,
+    "id": 1,
     "name": "John Connor",
     "age": "26",
     "email": "john@connor.com",
     "profile_photo": "",
-    "password": "$2a$10$d2rI9YzFvSGNxwu2z.GDEO9MUrxyj08KLiK14.u4G67nu086F2Xni"
+    "password": "$2a$10$d2rI9YzFvSGNxwu2z.GDEO9MUrxyj08KLiK14.u4G67nu086F2Xni",
+    "created_at": "2019-12-13T20:24:43.2412471-06:00",
+    "updated_at": "2019-12-13T20:24:43.2412471-06:00",
 }
 ```
 
@@ -101,8 +100,8 @@ Accept: application/json
 
 ```
 {
-	"email":"john@connor.com",
-	"password":"startx"
+    "email":"john@connor.com",
+    "password":"startx"
 }
 ```
 
@@ -141,7 +140,7 @@ Para interactuar con los demás endpoints es necesario generar un token
 
 ```
 PUT /users/:id
-Accept: application/jsonu
+Accept: application/json
 ```
 
 ##### Esquema del body
@@ -151,8 +150,8 @@ Accept: application/jsonu
     "name":"Juan Contreras",
     "age":"45",
     "profile_photo":"",
-	"email":"juan@contreras.com",
-	"password":"startx"
+    "email":"juan@contreras.com",
+    "password":"startx"
 }
 ```
 
@@ -167,14 +166,13 @@ Respuesta con estatus 200
 
 ```
 {
-    "CreatedAt": "2019-12-14T10:29:35.014696Z",
-    "DeletedAt": null,
-    "ID": 1,
-    "UpdatedAt": "2019-12-14T10:29:35.014696Z",
     "age": "45",
+    "created_at": "2019-12-14T10:29:35.014696Z",
     "email": "johny@connor.com",
+    "id": 1,
     "name": "John Connor Díaz",
     "password": "$2a$10$40aOB6LuKb5kXHb8FKA/CuASHsuPBZ7KHUnqL85JRT5jb8w5w5CJK"
+    "updated_at": "2019-12-14T10:29:35.014696Z",
 }
 ```
 
@@ -182,7 +180,58 @@ Respuesta con el estatus 401
 
 ```
 {
-    "error": "Unauthorized"
+    "error": "No autorizado"
+}
+```
+
+### Anadir contacto
+
+```
+POST /contacts
+Accept: application/json
+```
+
+##### Esquema del body
+
+```
+{
+    "name":"Cristiano Ronaldo",
+    "nickname":"CR/",
+    "email":"cr7@mail.com",
+    "phone":"5546768765",
+    "address":"Villa de las manzanas 208",
+    "user_id":1
+}
+```
+
+##### Respuesta
+
+| Status        | Significado   | Descripción                                                  |
+| ------------- |:-------------:| :-----------------------------------------------------------:|
+| 201           | OK            | Información creada satisfactoriamente                        |
+| 401           | Unauthorized  | El usuario no tiene permiso de realizar la acción solicitada |
+
+Respuesta con estatus 201
+
+```
+{
+    "id": 3,
+    "name": "Cristiano Ronaldo",
+    "nickname": "CR7",
+    "email": "cr7@mail.com",
+    "phone": "5546768765",
+    "address": "Villa de las manzanas 208",
+    "user_id": 1,
+    "created_at": "2019-12-14T17:15:18.7959126-06:00",
+    "updated_at": "2019-12-14T17:15:18.7959126-06:00"
+}
+```
+
+Respuesta con el estatus 401
+
+```
+{
+    "error": "No autorizado"
 }
 ```
 
