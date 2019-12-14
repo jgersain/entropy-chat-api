@@ -65,7 +65,7 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if tokenID != uint32(uid) {
-		utils.ERROR(w, http.StatusUnauthorized, errors.New(http.StatusText(http.StatusUnauthorized)))
+		utils.ERROR(w, http.StatusUnauthorized, errors.New("No autorizado"))
 		return
 	}
 	err = user.Validate("")

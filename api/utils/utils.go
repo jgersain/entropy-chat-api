@@ -23,6 +23,7 @@ func ERROR(w http.ResponseWriter, statusCode int, err error) {
 	return
 }
 
+//friendly messages validation
 func FormatError(err string) error {
 
 	if strings.Contains(err, "email") {

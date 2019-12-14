@@ -29,7 +29,7 @@ func (server *Server) Initialize(username, password, host, name string) {
 		fmt.Printf("Conexión a la base de datos realizada\n")
 	}
 
-	server.DB.Debug().AutoMigrate(&models.User{})
+	server.DB.Debug().AutoMigrate(&models.User{}, &models.Contact{})
 
 	server.Router = mux.NewRouter()
 	server.initializeRoutes()
