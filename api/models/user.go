@@ -16,7 +16,7 @@ type User struct {
 	Age          int     `json:"age,omitempty,string"`
 	Email        string  `gorm:"size:100;not null;unique" json:"email"`
 	ProfilePhoto *string `gorm:"type:varchar(100);" json:"profile_photo,omitempty"`
-	Password     string  `gorm:"size:100;not null;" json:"password"`
+	Password     string  `gorm:"size:100;not null;" json:"password,omitempty"`
 }
 
 //returns the bcrypt hash of the user password

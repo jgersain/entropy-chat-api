@@ -21,13 +21,13 @@ func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
 
 	err = user.Validate("login")
 	if err != nil {
-		utils.ERROR(w, http.StatusUnprocessableEntity, err)
+		utils.ERROR(w, http.StatusBadRequest, err)
 		return
 	}
 	token, err := server.SignIn(user.Email, user.Password)
 	if err != nil {
 		formattedError := utils.FormatError(err.Error())
-		utils.ERROR(w, http.StatusUnprocessableEntity, formattedError)
+		utils.ERROR(w, http.StatusUnauthorized, formattedError)
 		return
 	}
 	utils.JSON(w, http.StatusOK, struct {
