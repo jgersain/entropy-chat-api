@@ -40,6 +40,8 @@ $ docker exec -it postgres-entropy psql -U postgres -c "create role pgdev with l
 
 ### Endpoints
 
+La raíz del API en desarrollo se encuentra en http://127.0.0.1/api
+
 ### Registrarse
 
 ```
@@ -139,7 +141,7 @@ Para interactuar con los demás endpoints es necesario generar un token
 ### Editar información del perfil
 
 ```
-PUT /users/{:id}
+PUT /users/{id}
 Accept: application/json
 ```
 
@@ -238,7 +240,7 @@ Respuesta con el estatus 401
 ### Consultar lista de contactos
 
 ```
-GET /contacts?user_id={:id}
+GET /contacts?user_id={id}
 Accept: application/json
 ```
 
@@ -251,7 +253,7 @@ Accept: application/json
 | 200           | OK            | La solicitud ha tenido exito                                 |
 | 401           | Unauthorized  | El usuario no tiene permiso de realizar la acción solicitada |
 
-Respuesta con estatus 200
+Respuesta con estatus 200 ```/contacts?user_id=1```
 
 ```
 [
@@ -288,6 +290,45 @@ Respuesta con el estatus 401
 }
 ```
 
+### Ver un contacto en especifico
+
+```
+GET /contacts/{id}?user_id={id}
+Accept: application/json
+```
+
+##### Esquema del body
+
+##### Respuesta
+
+| Status        | Significado   | Descripción                                                  |
+| ------------- |:-------------:| :-----------------------------------------------------------:|
+| 200           | OK            | La solicitud ha tenido exito                                 |
+| 401           | Unauthorized  | El usuario no tiene permiso de realizar la acción solicitada |
+
+Respuesta con estatus 200 ```/contacts/1?user_id=1```
+
+```
+{
+    "id": 1,
+    "name": "Cristiano Ronaldo",
+    "nickname": "CR/",
+    "email": "cr7@gmail.com",
+    "phone": "5546768799",
+    "address": "Villa de las manzanas 209",
+    "user_id": 1,
+    "created_at": "2019-12-15T05:39:37.499016Z",
+    "updated_at": "2019-12-15T05:39:37.499016Z"
+}
+```
+
+Respuesta con el estatus 401
+
+```
+{
+    "error": "No autorizado"
+}
+```
 
 
 
