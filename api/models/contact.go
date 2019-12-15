@@ -60,3 +60,12 @@ func (contact *Contact) FindAllContactsUser(db *gorm.DB, user uint32) (*[]Contac
 	}
 	return &contacts, nil
 }
+
+func (contact *Contact) FindContactUserByID(db *gorm.DB, user uint32, contactId uint32) (*Contact, error) {
+	var err error
+	err = db.Debug().Model(&Contact{}).Where("user_id = ? AND id = ?", user, contactId).Take(&contact).Error
+	if err != nil {
+		return &Contact{}, err
+	}
+	return contact, nil
+}

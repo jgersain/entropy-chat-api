@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/jgersain/entropy-chat-api/api/auth"
 	"github.com/jgersain/entropy-chat-api/api/models"
 	"github.com/jgersain/entropy-chat-api/api/utils"
@@ -71,4 +72,38 @@ func (server *Server) GetContactsUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.JSON(w, http.StatusOK, contacts)
+}
+
+func (server *Server) GetContactUser(w http.ResponseWriter, r *http.Request) {
+
+	cId, err := strconv.ParseUint(mux.Vars(r)["id"], 10, 32)
+	if err != nil {
+		utils.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	uId, err := strconv.ParseUint(r.FormValue("user_id"), 10, 32)
+	if err != nil {
+		utils.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	contact := models.Contact{}
+
+	tokenID, err := auth.ExtractTokenID(r)
+	if err != nil {
+		utils.ERROR(w, http.StatusUnauthorized, errors.New("No autorizado"))
+		return
+	}
+	if tokenID != uint32(uId) {
+		utils.ERROR(w, http.StatusUnauthorized, errors.New("No autorizado"))
+		return
+	}
+
+	contactReceived, err := contact.FindContactUserByID(server.DB, uint32(uId), uint32(cId))
+	if err != nil {
+		utils.ERROR(w, http.StatusInternalServerError, err)
+		return
+	}
+	utils.JSON(w, http.StatusOK, contactReceived)
 }

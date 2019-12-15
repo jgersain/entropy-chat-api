@@ -6,18 +6,26 @@ import (
 
 func (server *Server) initializeRoutes() {
 	//Login endpoint
-	server.Router.HandleFunc("/login", middlewares.SetMiddlewareJSON(server.Login)).
+	server.Router.HandleFunc("/api/login", middlewares.SetMiddlewareJSON(server.Login)).
 		Methods("POST")
-	//Register user endpoint
-	server.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(server.CreateUser)).
+
+	//User endpoints
+	server.Router.HandleFunc("/api/users", middlewares.SetMiddlewareJSON(server.CreateUser)).
 		Methods("POST")
-	//Update profile endpoint
-	server.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(
+	server.Router.HandleFunc("/api/users/{id}", middlewares.SetMiddlewareJSON(
 		middlewares.SetMiddlewareAuthentication(server.UpdateUser))).Methods("PUT")
+
 	//Contacts endpoints
-	server.Router.HandleFunc("/contacts", middlewares.SetMiddlewareJSON(server.CreateContact)).
+	server.Router.HandleFunc("/api/contacts", middlewares.SetMiddlewareJSON(server.CreateContact)).
 		Methods("POST")
-	server.Router.HandleFunc("/contacts", middlewares.SetMiddlewareJSON(
-		middlewares.SetMiddlewareAuthentication(server.GetContactsUser))).Queries("user_id", "{id}").
+	// /api/contacts?user_id=[id]
+	server.Router.HandleFunc("/api/contacts", middlewares.SetMiddlewareJSON(
+		middlewares.SetMiddlewareAuthentication(server.GetContactsUser))).
+		Queries("user_id", "{id}").
+		Methods("GET")
+	// /api/contacts/10?user_id=[id]
+	server.Router.HandleFunc("/api/contacts/{id}", middlewares.SetMiddlewareJSON(
+		middlewares.SetMiddlewareAuthentication(server.GetContactUser))).
+		Queries("user_id", "{user_id}").
 		Methods("GET")
 }
