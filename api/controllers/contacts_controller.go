@@ -9,6 +9,7 @@ import (
 	"github.com/jgersain/entropy-chat-api/api/utils"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 func (server *Server) CreateContact(w http.ResponseWriter, r *http.Request) {
@@ -42,4 +43,32 @@ func (server *Server) CreateContact(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Lacation", fmt.Sprintf("%s%s/%d", r.Host, r.URL.Path, contactCreated.ID))
 	utils.JSON(w, http.StatusCreated, contactCreated)
+}
+
+func (server *Server) GetContactsUser(w http.ResponseWriter, r *http.Request) {
+
+	uid, err := strconv.ParseUint(r.FormValue("user_id"), 10, 32)
+	if err != nil {
+		utils.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	contact := models.Contact{}
+
+	tokenID, err := auth.ExtractTokenID(r)
+	if err != nil {
+		utils.ERROR(w, http.StatusUnauthorized, errors.New("No autorizado"))
+		return
+	}
+	if tokenID != uint32(uid) {
+		utils.ERROR(w, http.StatusUnauthorized, errors.New("No autorizado"))
+		return
+	}
+
+	contacts, err := contact.FindAllContactsUser(server.DB, uint32(uid))
+	if err != nil {
+		utils.ERROR(w, http.StatusInternalServerError, err)
+		return
+	}
+	utils.JSON(w, http.StatusOK, contacts)
 }

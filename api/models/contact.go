@@ -49,3 +49,14 @@ func (contact *Contact) SaveContact(db *gorm.DB) (*Contact, error) {
 	}
 	return contact, nil
 }
+
+func (contact *Contact) FindAllContactsUser(db *gorm.DB, user uint32) (*[]Contact, error) {
+
+	var err error
+	contacts := []Contact{}
+	err = db.Debug().Model(&Contact{}).Where("user_id = ?", user).Find(&contacts).Error
+	if err != nil {
+		return &[]Contact{}, err
+	}
+	return &contacts, nil
+}

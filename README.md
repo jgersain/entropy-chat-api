@@ -117,7 +117,7 @@ Respuesta con estatus 200
 ```
 {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1NzYzMjE4NDEsInVzZXJfaWQiOjF9.FlY4DR9PVM4Xfcy5In8rcnk2sTLUlpapv3ovWrUReNM",
-    "token_type": "bearer"
+    "token_type": "Bearer"
 }
 ```
 
@@ -139,7 +139,7 @@ Para interactuar con los demás endpoints es necesario generar un token
 ### Editar información del perfil
 
 ```
-PUT /users/:id
+PUT /users/{:id}
 Accept: application/json
 ```
 
@@ -215,7 +215,7 @@ Respuesta con estatus 201
 
 ```
 {
-    "id": 3,
+    "id": 1,
     "name": "Cristiano Ronaldo",
     "nickname": "CR7",
     "email": "cr7@mail.com",
@@ -225,6 +225,59 @@ Respuesta con estatus 201
     "created_at": "2019-12-14T17:15:18.7959126-06:00",
     "updated_at": "2019-12-14T17:15:18.7959126-06:00"
 }
+```
+
+Respuesta con el estatus 401
+
+```
+{
+    "error": "No autorizado"
+}
+```
+
+### Consultar lista de contactos
+
+```
+GET /contacts?user_id={:id}
+Accept: application/json
+```
+
+##### Esquema del body
+
+##### Respuesta
+
+| Status        | Significado   | Descripción                                                  |
+| ------------- |:-------------:| :-----------------------------------------------------------:|
+| 200           | OK            | La solicitud ha tenido exito                                 |
+| 401           | Unauthorized  | El usuario no tiene permiso de realizar la acción solicitada |
+
+Respuesta con estatus 200
+
+```
+[
+    {
+        "id": 1,
+        "name": "Cristiano Ronaldo",
+        "nickname": "CR/",
+        "email": "cr7@gmail.com",
+        "phone": "5546768765",
+        "address": "Villa de las manzanas 208",
+        "user_id": 1,
+        "created_at": "2019-12-15T02:09:02.771054Z",
+        "updated_at": "2019-12-15T02:09:02.771054Z"
+    },
+    {
+        "id": 2,
+        "name": "Leonel Messi",
+        "nickname": "Lio",
+        "email": "lio@mail.com",
+        "phone": "5546768799",
+        "address": "Villa de las manzanas 209",
+        "user_id": 1,
+        "created_at": "2019-12-15T02:23:22.693701Z",
+        "updated_at": "2019-12-15T02:23:22.693701Z"
+    }
+]
 ```
 
 Respuesta con el estatus 401

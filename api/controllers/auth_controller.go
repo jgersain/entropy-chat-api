@@ -35,7 +35,7 @@ func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
 		TokenType string `json:"token_type"`
 	}{
 		Token:     token,
-		TokenType: "bearer",
+		TokenType: "Bearer",
 	})
 }
 
