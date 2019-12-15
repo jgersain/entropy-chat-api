@@ -22,6 +22,7 @@ $ go get github.com/dgrijalva/jwt-go
 $ go get github.com/gorilla/mux
 $ go get github.com/jinzhu/gorm/dialects/postgres
 $ go get github.com/badoux/checkmail
+$ go get github.com/stretchr/testify
 ```
 
 - Crear una instancia de postgres utilizando docker. En el ejemplo el usuario es `pgdev` y la contraseña es `developer`
